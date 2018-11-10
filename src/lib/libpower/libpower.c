@@ -7,7 +7,7 @@
  */
 float calc_power_r(float volt, float resistance)
 {
-  float power = 0;
+  float power = 0.0;
 
   if (resistance > 0)
   {

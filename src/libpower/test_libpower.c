@@ -4,14 +4,14 @@
 
 void main(int argc, char const *argv[])
 {
-  float volt = 50.0;
+  float voltage = 50.0;
   float resistance = 800.0;
   float current = 0.0625; // I = V / R
 
   const float expected = 3.125;
 
-  float actualA = calc_power_r(volt, resistance);
-  float actualB = calc_power_i(volt, current);
+  float actualA = calc_power_r(voltage, resistance);
+  float actualB = calc_power_i(voltage, current);
 
   bool resultA = expected == actualA;
   bool resultB = expected == actualA;

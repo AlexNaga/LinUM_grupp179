@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "libcomponent.h"
+#include "libpower.h"
+#include "libresistance.h"
 
 int getInputFloat(char askFor[], float *userInput, int maxAttempts)
 {
@@ -14,7 +17,7 @@ int getInputFloat(char askFor[], float *userInput, int maxAttempts)
         if (result == 0)
         {
             while (fgetc(stdin) != '\n')
-            { //ta bort alla slasktecken för att tömma bufferten fram till \n
+            { // Ta bort alla slasktecken för att tömma bufferten fram till \n
                 ;
             }
             printf("...ogiltig indata...försök igen...\n");
@@ -44,7 +47,7 @@ int getInputChar(char askFor[], char *userInput, int maxAttempts)
         if (result == 0)
         {
             while (fgetc(stdin) != '\n')
-            { //ta bort alla slasktecken för att tömma bufferten fram till \n
+            { // Ta bort alla slasktecken för att tömma bufferten fram till \n
                 ;
             }
             printf("...ogiltig indata...försök igen...\n");
@@ -70,7 +73,7 @@ int getInputInt(char askFor[], int *userInput, int maxAttempts)
         if (result == 0)
         {
             while (fgetc(stdin) != '\n')
-            { //ta bort alla slasktecken för att tömma bufferten fram till \n
+            { // Ta bort alla slasktecken för att tömma bufferten fram till \n
                 ;
             }
             printf("...ogiltig indata...försök igen...\n");
@@ -87,36 +90,36 @@ int main()
 {
     float voltage;
     char connectionType;
-    int nbrOfcomponents;
+    int componentCount;
     float *componentArray;
     float *e12Resistance;
 
     if (!getInputFloat("Ange spänningskälla i V: ", &voltage, 3))
     {
         printf("Max antal försök har uppnåtts...avbryter...\n");
-        return -1;
+        goto error;
     }
 
     if (!getInputChar("Ange koppling[S | P]: ", &connectionType, 3))
     {
         printf("Max antal försök har uppnåtts...avbryter...\n");
-        return -1;
+        goto error;
     }
 
-    if (!getInputInt("Antal komponenter: ", &nbrOfcomponents, 3))
+    if (!getInputInt("Antal komponenter: ", &componentCount, 3))
     {
         printf("Max antal försök har uppnåtts...avbryter...\n");
-        return -1;
+        goto error;
     }
 
-    componentArray = malloc(nbrOfcomponents * sizeof(float));
+    componentArray = malloc(componentCount * sizeof(float));
     if (!componentArray)
     {
         printf("Kunde inte allokera minne för komponenter...avbryter...\n");
-        return -1;
+        goto error;
     }
 
-    for (int i = 0; i < nbrOfcomponents; i++)
+    for (int i = 0; i < componentCount; i++)
     {
         char buffer[50];
         sprintf(buffer, "Komponent %d i ohm: ", i + 1);
@@ -124,7 +127,7 @@ int main()
         {
             printf("Max antal försök har uppnåtts...avbryter...\n");
             free(componentArray);
-            return -1;
+            goto error;
         }
     }
 
@@ -133,13 +136,27 @@ int main()
     {
         printf("Kunde inte allokera minne för E12-resistanser...avbryter...\n");
         free(componentArray);
-        return -1;
+        goto error;
     }
 
+    float resistance = calc_resistance(componentCount, connectionType, componentArray);
+    printf("Ersättningsresistans: %.1f ohm\n", resistance);
     free(componentArray);
+
+    float power = calc_power_r(voltage, resistance);
+    printf("Effekt: %.2f W\n", power);
+
+    int resistorCount = e_resistance(resistance, e12Resistance);
+    printf("Ersättningsresistanser i E12-serien kopplade i serie:\n");
+
+    for (size_t i = 0; i < resistorCount; i++)
+    {
+        printf("%.0f\n", e12Resistance[i]);
+    }
+
     free(e12Resistance);
+    exit(EXIT_SUCCESS);
 
-    //TODO add function calls and output values
-
-    return 0;
+error:
+    exit(EXIT_FAILURE);
 }

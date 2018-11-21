@@ -1,4 +1,3 @@
-
 #include "resistance.h"
 
 /*
@@ -13,35 +12,33 @@
 */
 float calc_resistance(int count, char conn, float *array)
 {
-	float resistance = 0;
-	if(count<1)
-	{
-		return -1;
-	}
-	
-	switch(conn)
-	{
-	
-		case 'P':
-		for(int i = 0; i < count; i++)
-		{
-			resistance+= 1/array[i];
-		}
-		resistance = 1/resistance;
-		break;
-			
-		case 'S':
-		for(int i = 0; i<count; i++)
-		{
-			resistance+=array[i];
-		}
-		break;
+    float resistance = 0;
+    if (count < 1)
+    {
+        return -1;
+    }
 
-		default:
-		printf("conn must be either S or P\n");
-		return -1;
-	}
-	return resistance;
+    switch (conn)
+    {
 
+    case 'P':
+        for (int i = 0; i < count; i++)
+        {
+            resistance += 1 / array[i];
+        }
+        resistance = 1 / resistance;
+        break;
+
+    case 'S':
+        for (int i = 0; i < count; i++)
+        {
+            resistance += array[i];
+        }
+        break;
+
+    default:
+        printf("conn must be either S or P\n");
+        return -1;
+    }
+    return resistance;
 }
-

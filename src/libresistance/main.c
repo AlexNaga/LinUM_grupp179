@@ -10,13 +10,13 @@
 float calc_resistance(int count, char conn, float *array);
 int main(int argc, char *argv[])
 {
-	float array[]={100, 350, 73,2};
-	
-	float resistance;
-	resistance = calc_resistance(3, 'P', array);
-	printf("Parallel resistance is:%.2f\n", resistance);
+    float array[] = {100, 350, 73, 2};
 
-	resistance = calc_resistance(3, 'S', array);
-	printf("Serial resistance is:%.2f\n", resistance);
-	return 0;
+    float resistance;
+    resistance = calc_resistance(3, 'P', array);
+    printf("Parallel resistance is:%.2f\n", resistance);
+
+    resistance = calc_resistance(3, 'S', array);
+    printf("Serial resistance is:%.2f\n", resistance);
+    return 0;
 }

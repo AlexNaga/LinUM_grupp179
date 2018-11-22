@@ -1,4 +1,4 @@
-#include "resistance.h"
+#include "libresistance.h"
 
 /*
 	Calculates the parallel or serial resistance.

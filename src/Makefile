@@ -14,9 +14,9 @@ electrotest.o:	electrotest.c libresistance/libresistance.h libpower/libpower.h l
 	gcc -lm -c electrotest.c -o electrotest.o
 library:	libcomponent.o libresistance.o libpower.o
 	mkdir lib
-	gcc libresistance.o -shared -o lib/libresistance.so
-	gcc libpower.o -shared -o lib/libpower.so
-	gcc libcomponent.o -shared -o lib/libcomponent.so
+	gcc -lm libresistance.o -shared -o lib/libresistance.so
+	gcc -lm libpower.o -shared -o lib/libpower.so
+	gcc -lm libcomponent.o -shared -o lib/libcomponent.so
 
 libresistance.o:	libresistance/libresistance.c libresistance/libresistance.h
 	gcc -c -fpic libresistance/libresistance.c -o libresistance.o
@@ -28,9 +28,9 @@ libcomponent.o:	libcomponent/libcomponent.c libcomponent/libcomponent.h
 	gcc -c -fpic -lm libcomponent/libcomponent.c -o libcomponent.o
 
 lib:	libresistance.o libpower.o libcomponent.o
-	gcc libresistance.o -shared -o libresistance.so
-	gcc libpower.o -shared -o libpower.so
-	gcc libcomponent.o -shared -o libcomponent.so
+	gcc -lm libresistance.o -shared -o libresistance.so
+	gcc -lm libpower.o -shared -o libpower.so
+	gcc -lm libcomponent.o -shared -o libcomponent.so
 
 install:	electrotest.o lib 
 	chmod 777 libpower.so libresistance.so libcomponent.so

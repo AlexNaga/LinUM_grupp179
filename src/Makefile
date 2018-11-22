@@ -5,44 +5,45 @@
 # install will give complete file permission to everyone and copy the files
 # to /usr/bin and /usr/lib
 
-all:	library electrotest
+CC = gcc
+
+all: library electrotest
 
 electrotest: electrotest.o libcomponent.o libresistance.o libpower.o
-	gcc -lm electrotest.o -Llib  -lpower -lcomponent -lresistance -o electrotest -Wl,-Rlib
+	$(CC) electrotest.o -Llib -lpower -lcomponent -lresistance -lm -o electrotest -Wl,-Rlib
 
-electrotest.o:	electrotest.c libresistance/libresistance.h libpower/libpower.h libcomponent/libcomponent.h
-	gcc -lm -c electrotest.c -o electrotest.o
+electrotest.o: electrotest.c libresistance/libresistance.h libpower/libpower.h libcomponent/libcomponent.h
+	$(CC) -lm -c electrotest.c -o electrotest.o
 library:	libcomponent.o libresistance.o libpower.o
 	mkdir lib
-	gcc -lm libresistance.o -shared -o lib/libresistance.so
-	gcc -lm libpower.o -shared -o lib/libpower.so
-	gcc -lm libcomponent.o -shared -o lib/libcomponent.so
+	$(CC) -lm libresistance.o -shared -o lib/libresistance.so
+	$(CC) -lm libpower.o -shared -o lib/libpower.so
+	$(CC) -lm libcomponent.o -shared -o lib/libcomponent.so
 
-libresistance.o:	libresistance/libresistance.c libresistance/libresistance.h
-	gcc -c -fpic libresistance/libresistance.c -o libresistance.o
+libresistance.o: libresistance/libresistance.c libresistance/libresistance.h
+	$(CC) -c -fpic libresistance/libresistance.c -o libresistance.o
 
-libpower.o:	libpower/libpower.c libpower/libpower.h
-	gcc -c -fpic -lm libpower/libpower.c -o libpower.o
+libpower.o: libpower/libpower.c libpower/libpower.h
+	$(CC) -c -fpic -lm libpower/libpower.c -o libpower.o
 
 libcomponent.o:	libcomponent/libcomponent.c libcomponent/libcomponent.h
-	gcc -c -fpic -lm libcomponent/libcomponent.c -o libcomponent.o
+	$(CC) -c -fpic -lm libcomponent/libcomponent.c -o libcomponent.o
 
 lib:	libresistance.o libpower.o libcomponent.o
-	gcc -lm libresistance.o -shared -o libresistance.so
-	gcc -lm libpower.o -shared -o libpower.so
-	gcc -lm libcomponent.o -shared -o libcomponent.so
+	$(CC) -lm libresistance.o -shared -o libresistance.so
+	$(CC) -lm libpower.o -shared -o libpower.so
+	$(CC) -lm libcomponent.o -shared -o libcomponent.so
 
-install:	electrotest.o lib 
+install: lib electrotest.o
 	chmod 777 libpower.so libresistance.so libcomponent.so
 	cp libresistance.so libpower.so libcomponent.so /usr/lib
-	gcc -lm electrotest.o -L/usr/lib -lpower -lcomponent -lresistance -o electrotest -Wl,-R/usr/lib
+	$(CC) -lm electrotest.o -L/usr/lib -lpower -lcomponent -lresistance -o electrotest -Wl,-R/usr/lib
 	chmod 777 electrotest
 	cp electrotest /usr/bin
+
 clean:
 	rm -f *.o *so
 
 uninstall:
 	rm /usr/lib/libresistance.so /usr/lib/libpower.so /usr/lib/libcomponent.so
 	rm /usr/bin/electrotest
-
-

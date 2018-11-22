@@ -14,7 +14,8 @@ electrotest: electrotest.o libcomponent.o libresistance.o libpower.o
 
 electrotest.o: electrotest.c libresistance/libresistance.h libpower/libpower.h libcomponent/libcomponent.h
 	$(CC) -c electrotest.c -o electrotest.o -lm
-library:	libcomponent.o libresistance.o libpower.o
+
+library: libcomponent.o libresistance.o libpower.o
 	mkdir lib
 	$(CC) libresistance.o -shared -o lib/libresistance.so -lm
 	$(CC) libpower.o -shared -o lib/libpower.so -lm
@@ -29,20 +30,18 @@ libpower.o: libpower/libpower.c libpower/libpower.h
 libcomponent.o:	libcomponent/libcomponent.c libcomponent/libcomponent.h
 	$(CC) -c -fpic libcomponent/libcomponent.c -o libcomponent.o -lm
 
-lib:	libresistance.o libpower.o libcomponent.o
+lib: libresistance.o libpower.o libcomponent.o
 	$(CC) libresistance.o -shared -o libresistance.so -lm
 	$(CC) libpower.o -shared -o libpower.so -lm
 	$(CC) libcomponent.o -shared -o libcomponent.so -lm
 
 install: lib electrotest.o
-	chmod 777 libpower.so libresistance.so libcomponent.so
-	cp libresistance.so libpower.so libcomponent.so /usr/lib
-	$(CC) electrotest.o -L/usr/lib -lpower -lcomponent -lresistance -o electrotest -Wl,-R/usr/lib -lm
-	chmod 777 electrotest
-	cp electrotest /usr/bin
+	install libresistance.so libpower.so libcomponent.so /usr/lib
+	$(CC) electrotest.o -L/usr/lib -lpower -lcomponent -lresistance -o electrotest -Wl,-R/usr/lib
+	install electrotest /usr/bin
 
 clean:
-	rm -f *.o *so
+	rm -rf *.o *.so ./lib/
 
 uninstall:
 	rm /usr/lib/libresistance.so /usr/lib/libpower.so /usr/lib/libcomponent.so

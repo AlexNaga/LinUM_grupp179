@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libcomponent.h"
-#include "libpower.h"
-#include "libresistance.h"
+#include "libcomponent/libcomponent.h"
+#include "libpower/libpower.h"
+#include "libresistance/libresistance.h"
 
 int getInputFloat(char askFor[], float *userInput, int maxAttempts)
 {

@@ -16,14 +16,14 @@ library:	libcomponent.o libresistance.o libpower.o
 	gcc libpower.o -shared -o lib/libpower.so
 	gcc libcomponent.o -shared -o lib/libcomponent.so
 
-libresistance.o:	libresistance.c libresistance.h
-	gcc -c -fpic libresistance.c -o libresistance.o
+libresistance.o:	libresistance/libresistance.c libresistance/libresistance.h
+	gcc -c -fpic libresistance/libresistance.c -o libresistance.o
 
-libpower.o:	libpower.c libpower.h
-	gcc -c -fpic -lm libpower.c -o libpower.o
+libpower.o:	libpower/libpower.c libpower/libpower.h
+	gcc -c -fpic -lm libpower/libpower.c -o libpower.o
 
-libcomponent.o:	libcomponent.c libcomponent.h
-	gcc -c -fpic -lm libcomponent.c -o libcomponent.o
+libcomponent.o:	libcomponent/libcomponent.c libcomponent/libcomponent.h
+	gcc -c -fpic -lm libcomponent/libcomponent.c -o libcomponent.o
 
 lib:	libresistance.o libpower.o libcomponent.o
 	gcc libresistance.o -shared -o libresistance.so
@@ -38,5 +38,9 @@ install:	electrotest.o lib
 	cp electrotest /usr/bin
 clean:
 	rm -f *.o *so
+
+uninstall:
+	rm /usr/lib/libresistance.so /usr/lib/libpower.so /usr/lib/libcomponent.so
+	rm /usr/bin/electrotest
 
 

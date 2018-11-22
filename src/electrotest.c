@@ -8,7 +8,7 @@ int getInputFloat(char askFor[], float *userInput, int maxAttempts)
 {
     for (int i = 0; i < maxAttempts; i++)
     {
-        printf(askFor);
+        printf("%s", askFor);
         int result = scanf("%f", userInput);
         if (result > 0)
         {
@@ -34,7 +34,7 @@ int getInputChar(char askFor[], char *userInput, int maxAttempts)
 {
     for (int i = 0; i < maxAttempts; i++)
     {
-        printf(askFor);
+        printf("%s", askFor);
         int result = scanf(" %c", userInput);
         if (result > 0)
         {
@@ -64,7 +64,7 @@ int getInputInt(char askFor[], int *userInput, int maxAttempts)
 {
     for (int i = 0; i < maxAttempts; i++)
     {
-        printf(askFor);
+        printf("%s", askFor);
         int result = scanf("%d", userInput);
         if (result > 0)
         {

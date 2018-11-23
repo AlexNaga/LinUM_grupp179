@@ -129,6 +129,7 @@ int main()
             free(componentArray);
             goto error;
         }
+        componentArray[i]=voltage;
     }
 
     e12Resistance = malloc(3 * sizeof(float));

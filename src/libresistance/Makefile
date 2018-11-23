@@ -7,7 +7,7 @@ resistanceTest:	resistance.o main.o
 	gcc -o resistanceTest resistance.o main.o
 
 resistance.o:	libresistance.c libresistance.h
-	gcc -c libresistance.c
+	gcc -c libresistance.c -o resistance.o
 
 main.o:	main.c 
 	gcc -c main.c

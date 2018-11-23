@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 
 /**
@@ -11,7 +10,7 @@ float calc_power_r(float voltage, float resistance)
 
     if (resistance > 0)
     {
-        power = pow(voltage, 2.0) / resistance;
+        power = (voltage * voltage) / resistance;
     }
 
     return power;

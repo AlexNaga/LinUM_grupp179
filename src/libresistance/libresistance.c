@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "libresistance.h"
 
 /*
@@ -18,10 +19,17 @@ float calc_resistance(int count, char conn, float *array)
         return -1;
     }
 
-    switch (conn)
+    switch (tolower(conn))
     {
 
-    case 'P':
+    case 's':
+        for (int i = 0; i < count; i++)
+        {
+            resistance += array[i];
+        }
+        break;
+    
+    case 'p':
         for (int i = 0; i < count; i++)
         {
             resistance += 1 / array[i];
@@ -29,15 +37,8 @@ float calc_resistance(int count, char conn, float *array)
         resistance = 1 / resistance;
         break;
 
-    case 'S':
-        for (int i = 0; i < count; i++)
-        {
-            resistance += array[i];
-        }
-        break;
-
     default:
-        printf("conn must be either S or P\n");
+        printf("connection type must be either S or P\n");
         return -1;
     }
     return resistance;

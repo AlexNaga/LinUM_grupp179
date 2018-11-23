@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
 #include "libcomponent/libcomponent.h"
 #include "libpower/libpower.h"
 #include "libresistance/libresistance.h"
@@ -38,11 +40,11 @@ int getInputChar(char askFor[], char *userInput, int maxAttempts)
         int result = scanf(" %c", userInput);
         if (result > 0)
         {
-            if ((*userInput) == 'P' || (*userInput) == 'S')
+            if (tolower(*userInput) == 's' || tolower(*userInput) == 'p')
             {
                 return 1;
             }
-            printf("...ogiltig indata...giltiga värden är P eller S...försök igen...\n");
+            printf("...ogiltig indata...giltiga värden är S eller P...försök igen...\n");
         }
         if (result == 0)
         {
@@ -89,10 +91,11 @@ int getInputInt(char askFor[], int *userInput, int maxAttempts)
 int main()
 {
     float voltage;
-    char connectionType;
-    int componentCount;
+    float resistance;
     float *componentArray;
     float *e12Resistance;
+    int componentCount;
+    char connectionType;
 
     if (!getInputFloat("Ange spänningskälla i V: ", &voltage, 3))
     {
@@ -100,7 +103,7 @@ int main()
         goto error;
     }
 
-    if (!getInputChar("Ange koppling[S | P]: ", &connectionType, 3))
+    if (!getInputChar("Ange koppling [S | P]: ", &connectionType, 3))
     {
         printf("Max antal försök har uppnåtts...avbryter...\n");
         goto error;
@@ -123,13 +126,13 @@ int main()
     {
         char buffer[50];
         sprintf(buffer, "Komponent %d i ohm: ", i + 1);
-        if (!getInputFloat(buffer, &voltage, 3))
+        if (!getInputFloat(buffer, &resistance, 3))
         {
             printf("Max antal försök har uppnåtts...avbryter...\n");
             free(componentArray);
             goto error;
         }
-        componentArray[i]=voltage;
+        componentArray[i] = resistance;
     }
 
     e12Resistance = malloc(3 * sizeof(float));
@@ -140,7 +143,7 @@ int main()
         goto error;
     }
 
-    float resistance = calc_resistance(componentCount, connectionType, componentArray);
+    resistance = calc_resistance(componentCount, connectionType, componentArray);
     printf("Ersättningsresistans: %.1f ohm\n", resistance);
     free(componentArray);
 

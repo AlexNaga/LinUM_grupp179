@@ -41,7 +41,7 @@ install: lib electrotest.o
 	install electrotest /usr/bin
 
 clean:
-	rm -rf *.o *.so ./lib/
+	rm -rf *.o *.so
 
 uninstall:
 	rm /usr/lib/libresistance.so /usr/lib/libpower.so /usr/lib/libcomponent.so

@@ -1,9 +1,8 @@
 # Makefile for electrotest.
-# all compiles the libraries and puts them in the lib directory, and compiles
-# the mainprogram with the shared libraries
-# lib builds the libraries
-# install will give complete file permission to everyone and copy the files
-# to /usr/bin and /usr/lib
+# all compiles the libraries and puts them in the lib directory, it also compiles
+# the mainprogram with the shared libraries.
+# lib builds the libraries.
+# install will copy the files to /usr/bin and /usr/lib.
 
 CC = gcc
 

@@ -26,7 +26,7 @@ libresistance.o: libresistance/libresistance.c libresistance/libresistance.h
 libpower.o: libpower/libpower.c libpower/libpower.h
 	$(CC) -c -fpic libpower/libpower.c -o libpower.o -lm
 
-libcomponent.o:	libcomponent/libcomponent.c libcomponent/libcomponent.h
+libcomponent.o: libcomponent/libcomponent.c libcomponent/libcomponent.h
 	$(CC) -c -fpic libcomponent/libcomponent.c -o libcomponent.o -lm
 
 lib: libresistance.o libpower.o libcomponent.o

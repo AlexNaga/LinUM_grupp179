@@ -20,6 +20,6 @@ void main(int argc, char const *argv[])
     const bool resultA = expected == actualA;
     const bool resultB = expected == actualB;
 
-    printf("[%s] calc_power_r() returns the expected value (%.3f). Acutal output: %.3f\n", resultA ? "true" : "false", expected, actualA);
-    printf("[%s] calc_power_i() returns the expected value (%.3f). Acutal output: %.3f\n", resultB ? "true" : "false", expected, actualB);
+    printf("[%s] calc_power_r() returns the expected value (%.3f). Actual output: %.3f\n", resultA ? "true" : "false", expected, actualA);
+    printf("[%s] calc_power_i() returns the expected value (%.3f). Actual output: %.3f\n", resultB ? "true" : "false", expected, actualB);
 }

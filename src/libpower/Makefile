@@ -1,12 +1,14 @@
 CC=gcc
-SOURCE=libpower.c
-TESTAPP=test_libpower
-TESTSOURCE=test_libpower.c
-RM=rm -f $(TESTAPP)
+
+LIB_SRC=libpower.c
+TEST_SRC=test_libpower.c
+OUTPUT_NAME=test_libpower
+
+RM=rm -f $(OUTPUT_NAME)
 
 # Build the test program
-test: $(TESTSOURCE) $(SOURCE)
-	$(CC) -o $(TESTAPP) $(TESTSOURCE) $(SOURCE) -lm
+test: $(TEST_SRC) $(LIB_SRC)
+	$(CC) -o $(OUTPUT_NAME) $(TEST_SRC) $(LIB_SRC) -lm
 
 clean:
 	$(RM)
